@@ -1,20 +1,28 @@
 import { Button } from 'antd'
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+import { useStoreActions, useStoreState } from '../store'
 
 export default function Home() {
-  const history = useHistory()
+  const user = useStoreState((s) => s.userState.user)
+  const logOut = useStoreActions((a) => a.userState.logOut)
 
-  function handleClick() {
-    history.push('/login')
+  function handleClickLogOut() {
+    logOut()
   }
 
   return (
     <div>
-      <Button size="large" type="link" onClick={handleClick}>
-        Login
-      </Button>
-      <Link to="/login">Login</Link>
+      {user ? (
+        <div>
+          <div>{user.email}</div>
+          <Button type="link" onClick={handleClickLogOut}>
+            Log out
+          </Button>
+        </div>
+      ) : (
+        <Redirect to="/login" />
+      )}
     </div>
   )
 }

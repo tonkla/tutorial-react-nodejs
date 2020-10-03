@@ -1,10 +1,13 @@
 import { Button, Input } from 'antd'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useStoreActions } from '../store'
+import { User } from '../typings'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const history = useHistory()
+  const setUser = useStoreActions((actions) => actions.userState.setUser)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value)
@@ -13,6 +16,10 @@ export default function Login() {
   function handleClick() {
     const emailRegex = /(.+)@(.+){2,}\.(.+){2,}/
     if (emailRegex.test(email)) {
+      const user: User = {
+        email,
+      }
+      setUser(user)
       history.push('/')
     }
   }
