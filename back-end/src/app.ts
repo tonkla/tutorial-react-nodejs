@@ -2,15 +2,14 @@
 import Koa from 'koa'
 // import bodyParser from 'koa-bodyparser'
 import Router from 'koa-tree-router'
+import user from './controllers/user'
 
 const r = new Router()
-r.get(`/ping`, (ctx) => {
-  ctx.body = 'pong'
-})
+r.get(`/users`, user.findAll)
 
-const port = 8080
-new Koa()
+const app = new Koa()
   // .use(cors())
   // .use(bodyParser())
   .use(r.routes())
-  .listen({ port }, async () => console.log(`🚀 API launched on port ${port}`))
+
+export default app

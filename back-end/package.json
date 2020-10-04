@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --no-notify src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --no-notify src/server.ts",
     "build": "rm -rf dist && npx tsc",
     "test": "jest"
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
+    "dotenv": "^8.2.0",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
     "koa-tree-router": "^0.7.0"
