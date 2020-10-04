@@ -2,7 +2,7 @@ import { prisma } from '.'
 import { User } from '../typings'
 
 export async function findByEmail(email: string) {
-  return await prisma.user.findOne({ where: { email } })
+  return await prisma.user.findOne({ where: { email }, include: { roles: true } })
 }
 
 export async function create(user: User) {

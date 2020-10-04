@@ -1,6 +1,6 @@
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url = "***"
 }
 
 generator client {
@@ -19,3 +19,11 @@ model User {
   password String
   roles Role[]
 }
+
+// model RoleUser {
+//   roleId Int
+//   role Role @relation(fields: [roleId], references: [id])
+//   userId Int
+//   user User @relation(fields: [userId], references: [id])
+//   @@id([roleId, userId])
+// }

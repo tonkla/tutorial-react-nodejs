@@ -3,6 +3,7 @@ import { StoreProvider } from 'easy-peasy'
 import React, { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import './App.css'
+import AdminRoute from './components/AdminRoute'
 import AuthorizedRoute from './components/AuthorizedRoute'
 // import About from './pages/About'
 // import Home from './pages/Home'
@@ -24,7 +25,7 @@ export default function App() {
           <Switch>
             <Route path="/login" exact component={Login} />
             <Route path="/register" exact component={Register} />
-            <AuthorizedRoute path="/about" exact component={About} />
+            <AdminRoute path="/about" exact component={About} />
             <AuthorizedRoute path="/" exact component={Home} />
             <Redirect to="/" />
           </Switch>

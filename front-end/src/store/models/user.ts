@@ -14,9 +14,12 @@ const userState: UserStateModel = {
   setUser: action((state, user) => {
     state.user = user
   }),
-  logIn: thunk(async (actions, data) => {
-    const token = await userApi.logIn(data.email, data.password)
-    if (token) actions.setUser({ email: data.email, token })
+  logIn: thunk(async (actions, data, { getStoreActions }: any) => {
+    const user = await userApi.logIn(data.email, data.password)
+    if (user) {
+      actions.setUser({ email: data.email, token: '' })
+      getStoreActions().userRoleState.setUserRole({ email: data.email, roles: user.roles })
+    }
   }),
   logOut: action((state) => {
     state.user = null
