@@ -25,12 +25,11 @@ export default function MainLayout({ children }: React.ComponentProps<'div'>) {
           <Header className="px-10 bg-white">
             <div className="flex">
               <div className="flex items-center">
-                {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                  className: 'trigger',
-                  onClick: () => {
-                    setCollapsed(!collapsed)
-                  },
-                })}
+                {collapsed ? (
+                  <MenuUnfoldOutlined className="trigger" onClick={() => setCollapsed(false)} />
+                ) : (
+                  <MenuFoldOutlined className="trigger" onClick={() => setCollapsed(true)} />
+                )}
               </div>
               <div className="flex-1 flex flex-row justify-end items-center">
                 <div>{user.email}</div>
