@@ -1,6 +1,7 @@
 import { Button, Form, Input } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import userApi from '../services/api/user'
 import { useStoreActions } from '../store'
 import { User } from '../typings'
 
@@ -12,8 +13,7 @@ export default function Login() {
 
   useEffect(() => {
     ;(async () => {
-      // await userApi.findAll()
-      console.log(process.env.REACT_APP_API_URL)
+      await userApi.findAll()
     })()
   }, [])
 
@@ -35,7 +35,7 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="mt-10">
+      <div className="mt-10 w-64">
         <Form>
           <Form.Item>
             <Input size="large" placeholder="Email" onChange={handleChange} />
@@ -44,11 +44,11 @@ export default function Login() {
             <Input size="large" placeholder="Password" onChange={handleChange} />
           </Form.Item>
           <Form.Item>
-            <Button size="large" type="primary" className="mt-4 w-full" onClick={handleClick}>
+            <Button size="large" type="primary" className="w-full" onClick={handleClick}>
               Log in
             </Button>
           </Form.Item>
-          <div className="mt-10 flex justify-center">
+          <div className="flex justify-center">
             <Button
               type="link"
               onClick={() => {

@@ -6,6 +6,7 @@ import user from './controllers/user'
 
 const r = new Router()
 r.get(`/users`, user.findAll)
+r.post(`/users`, user.create)
 
 const app = new Koa().use(cors()).use(bodyParser()).use(r.routes())
 

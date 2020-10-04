@@ -1,11 +1,20 @@
 import { Context } from 'koa'
-import { User } from '../typings'
+import userRepo from '../models/user'
 
 export async function findAll(ctx: Context) {
-  const users: User[] = [{ email: 'admin@mail.com' }]
-  ctx.body = users
+  ctx.body = []
+}
+
+export async function create(ctx: Context) {
+  try {
+    const { user } = ctx.request.body
+    ctx.body = await userRepo.create(user)
+  } catch (e) {
+    ctx.status = 403
+  }
 }
 
 export default {
   findAll,
+  create,
 }

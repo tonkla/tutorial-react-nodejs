@@ -9,7 +9,7 @@ export default function Register() {
   function handleChange() {}
 
   async function onFinish(values: any) {
-    const result = await userApi.create(values)
+    await userApi.create(values)
   }
 
   function onFinishFailed(error: any) {
