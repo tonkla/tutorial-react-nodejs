@@ -9,7 +9,10 @@ export default function Register() {
   function handleChange() {}
 
   async function onFinish(values: any) {
-    await userApi.create(values)
+    const data = await userApi.create(values)
+    if (data) {
+      history.push('/login')
+    }
   }
 
   function onFinishFailed(error: any) {
