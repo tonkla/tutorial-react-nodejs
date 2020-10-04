@@ -1,13 +1,15 @@
 import { Button, Form, Input } from 'antd'
 import React from 'react'
 import { useHistory } from 'react-router-dom'
+import userApi from '../services/api/user'
 
 export default function Register() {
   const history = useHistory()
+
   function handleChange() {}
 
-  function onFinish(values: any) {
-    console.log('Values', values)
+  async function onFinish(values: any) {
+    const result = await userApi.create(values)
   }
 
   function onFinishFailed(error: any) {
@@ -38,6 +40,9 @@ export default function Register() {
             </Button>
           </Form.Item>
         </Form>
+        <Button className="w-full" type="link" onClick={() => history.push('/login')}>
+          Cancel
+        </Button>
       </div>
     </div>
   )
