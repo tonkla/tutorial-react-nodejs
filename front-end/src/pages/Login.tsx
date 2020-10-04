@@ -31,6 +31,16 @@ export default function Login() {
         <Button size="large" type="primary" className="mt-4 w-full" onClick={handleClick}>
           Log in
         </Button>
+        <div className="mt-10 flex justify-center">
+          <Button
+            type="link"
+            onClick={() => {
+              history.push('/register')
+            }}
+          >
+            Register
+          </Button>
+        </div>
       </div>
     </div>
   )

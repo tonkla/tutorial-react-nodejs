@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import './App.css'
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Register from './pages/Register'
 import store from './store'
 import './styles/tailwind-output.css'
 
@@ -14,6 +15,7 @@ export default function App() {
       <Router>
         <Switch>
           <Route path="/login" exact component={Login} />
+          <Route path="/register" exact component={Register} />
           <Route path="/" exact component={Home} />
           <Redirect to="/" />
         </Switch>
