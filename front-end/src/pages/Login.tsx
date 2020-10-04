@@ -1,5 +1,5 @@
 import { Button, Form, Input } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useStoreActions } from '../store'
 import { User } from '../typings'
@@ -9,6 +9,13 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const history = useHistory()
   const setUser = useStoreActions((actions) => actions.userState.setUser)
+
+  useEffect(() => {
+    ;(async () => {
+      // await userApi.findAll()
+      console.log(process.env.REACT_APP_API_URL)
+    })()
+  }, [])
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value)
