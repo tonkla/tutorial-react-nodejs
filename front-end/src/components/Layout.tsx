@@ -1,13 +1,26 @@
-import { DashboardOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import {
+  DashboardOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 import { Button, Layout, Menu } from 'antd'
 import React, { useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useStoreActions, useStoreState } from '../store'
 
 export default function MainLayout({ children }: React.ComponentProps<'div'>) {
   const [collapsed, setCollapsed] = useState(false)
 
+  const location = useLocation()
+  const history = useHistory()
+
   const user = useStoreState((s) => s.userState.user)
   const logOut = useStoreActions((a) => a.userState.logOut)
+
+  function getSelected() {
+    return [location.pathname]
+  }
 
   const { Header, Content, Sider } = Layout
 
@@ -15,9 +28,22 @@ export default function MainLayout({ children }: React.ComponentProps<'div'>) {
     user && (
       <Layout className="h-screen">
         <Sider trigger={null} collapsible collapsed={collapsed}>
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1" icon={<DashboardOutlined />}>
-              Dashboard
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={['/']} selectedKeys={getSelected()}>
+            <Menu.Item
+              key="/"
+              icon={<DashboardOutlined />}
+              onClick={() => history.push('/')}
+              className="flex items-center"
+            >
+              Home
+            </Menu.Item>
+            <Menu.Item
+              key="/about"
+              icon={<UserOutlined />}
+              onClick={() => history.push('/about')}
+              className="flex items-center"
+            >
+              About
             </Menu.Item>
           </Menu>
         </Sider>
