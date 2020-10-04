@@ -1,25 +1,21 @@
 import { Button, Form, Input } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import userApi from '../services/api/user'
-import { useStoreActions } from '../store'
+import { Redirect, useHistory } from 'react-router-dom'
+import { useStoreActions, useStoreState } from '../store'
 import { User } from '../typings'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
   const history = useHistory()
-  const setUser = useStoreActions((actions) => actions.userState.setUser)
+
+  const user = useStoreState((s) => s.userState.user)
+  const logIn = useStoreActions((a) => a.userState.logIn)
 
   useEffect(() => {
-    ;(async () => {
-      await userApi.findAll()
-    })()
+    ;(async () => {})()
   }, [])
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setEmail(e.target.value)
-  }
 
   function handleClick() {
     const emailRegex = /(.+)@(.+){2,}\.(.+){2,}/
@@ -28,20 +24,26 @@ export default function Login() {
         email,
         password,
       }
-      setUser(user)
-      history.push('/')
+      logIn(user)
     }
   }
 
-  return (
+  return user ? (
+    <Redirect to="/" />
+  ) : (
     <div className="flex items-center justify-center">
       <div className="mt-10 w-64">
         <Form>
           <Form.Item>
-            <Input size="large" placeholder="Email" onChange={handleChange} />
+            <Input size="large" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
           </Form.Item>
           <Form.Item>
-            <Input size="large" placeholder="Password" onChange={handleChange} />
+            <Input
+              size="large"
+              placeholder="Password"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </Form.Item>
           <Form.Item>
             <Button size="large" type="primary" className="w-full" onClick={handleClick}>

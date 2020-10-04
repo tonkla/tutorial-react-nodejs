@@ -15,16 +15,12 @@ export default function Register() {
     }
   }
 
-  function onFinishFailed(error: any) {
-    console.log('Error', error)
-  }
-
   const emailRegex = /(.+)@(.+){2,}\.(.+){2,}/
 
   return (
     <div className="flex items-center justify-center">
       <div className="mt-10 w-64">
-        <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form onFinish={onFinish}>
           <Form.Item
             name="email"
             rules={[

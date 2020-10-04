@@ -1,14 +1,12 @@
-// import { Action, action, Thunk, thunk } from 'easy-peasy'
-// import auth from '../../services/auth'
-import { Action, action } from 'easy-peasy'
-import { User } from '../../typings'
+import { Action, action, Thunk, thunk } from 'easy-peasy'
+import userApi from '../../services/api/user'
+import { User, UserLogin } from '../../typings'
 
 export interface UserStateModel {
-  user: User | null
-  setUser: Action<UserStateModel, User | null>
+  user: UserLogin | null
+  setUser: Action<UserStateModel, UserLogin | null>
+  logIn: Thunk<UserStateModel, User>
   logOut: Action<UserStateModel>
-  // signIn: Thunk<UserStateModel>
-  // signOut: Thunk<UserStateModel>
 }
 
 const userState: UserStateModel = {
@@ -16,17 +14,13 @@ const userState: UserStateModel = {
   setUser: action((state, user) => {
     state.user = user
   }),
+  logIn: thunk(async (actions, data) => {
+    const token = await userApi.logIn(data.email, data.password)
+    if (token) actions.setUser({ email: data.email, token })
+  }),
   logOut: action((state) => {
     state.user = null
   }),
-  // signIn: thunk(async (actions) => {
-  //   const user = await auth.signIn()
-  //   if (user) actions.set(user)
-  // }),
-  // signOut: thunk(async (actions) => {
-  //   await auth.signOut()
-  //   actions.set(null)
-  // }),
 }
 
 export default userState

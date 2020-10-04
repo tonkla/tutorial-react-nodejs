@@ -1,20 +1,28 @@
+import bcrypt from 'bcrypt'
 import { Context } from 'koa'
 import userRepo from '../models/user'
 
-export async function findAll(ctx: Context) {
-  ctx.body = []
+export async function logIn(ctx: Context) {
+  const { email, password } = ctx.request.body
+  const user = await userRepo.findByEmail(email)
+  if (user && (await bcrypt.compare(password, user.password))) {
+    ctx.body = 'token'
+  } else {
+    ctx.status = 401
+  }
 }
 
 export async function create(ctx: Context) {
   try {
     const { user } = ctx.request.body
-    ctx.body = await userRepo.create(user)
+    const password = await bcrypt.hash(user.password, 10)
+    ctx.body = await userRepo.create({ ...user, password })
   } catch (e) {
     ctx.status = 403
   }
 }
 
 export default {
-  findAll,
+  logIn,
   create,
 }

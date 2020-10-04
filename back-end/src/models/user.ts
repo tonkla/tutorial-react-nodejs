@@ -1,12 +1,15 @@
-import bcrypt from 'bcrypt'
 import { prisma } from '.'
 import { User } from '../typings'
 
+export async function findByEmail(email: string) {
+  return await prisma.user.findOne({ where: { email } })
+}
+
 export async function create(user: User) {
-  const password = await bcrypt.hash(user.password, 10)
-  return await prisma.user.create({ data: { ...user, password } })
+  return await prisma.user.create({ data: user })
 }
 
 export default {
+  findByEmail,
   create,
 }
